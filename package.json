@@ -1,0 +1,26 @@
+{
+    "publisher":"ST",
+    "name": "magiccode",
+    "displayName": "MagicCode",
+    "description": "MagicCode for Visual Studio Code",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.58.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "magiccode",
+            "aliases": ["MagicCode", "magiccode"],
+            "extensions": [".mcs"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "magiccode",
+            "scopeName": "source.magiccode",
+            "path": "./syntaxes/magiccode.tmLanguage.json"
+        }]
+    }
+}
