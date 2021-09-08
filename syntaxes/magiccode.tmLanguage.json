@@ -1,0 +1,87 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MagicCode",
+	"scopeName": "source.magiccode",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"match": "\\b(break|continue|do|else|for|if|return|while)\\b",
+			"name": "keyword.control.magiccode"
+		},
+		{
+			"match": "^\\s*((#)(magic-onetime|skill|magic-repeate))\\b\\s*",
+			"name": "keyword.control.directive.$3.magiccode"
+		},
+		{
+			"match": "0[xX][0-9a-fA-F]+\\b",
+			"name": "constant.numeric"
+		},
+		
+		{
+			"name" : "constant.numeric",
+			"match" : "0[bB][0-1_]+\\b"
+		},
+		{
+			"name" : "constant.numeric",
+			"match" : "[+-]?\\d+(?:(?:\\.\\d*)?(F|f)?)\\b"
+		},
+		{
+			"name" : "keyword.operator",
+			"match" : "--|\\+\\+|[-\\+\\*/!<>=]=?"
+		}, 
+		{
+			"name" : "keyword",
+			"match" : "#(?:include|main|init)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "#(?:magic-onetime|magic-repeate|skill)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "struct\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "enum\\b"
+		},
+		{
+			"name" : "storage.type",
+			"match" : "\\s*?(?:void|int|string|float)\\s+?(?=[a-zA-Z_$][a-zA-Z0-9_$]*\\s*?[(])"
+		},
+		{
+			"name" : "storage.type",
+			"match" : "\\s*[a-zA-Z_$][a-zA-Z0-9_$]*\\s+(?=(?:[a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(?:\\=.*)*;)"
+		},
+		{
+			"name" : "function",
+			"match" : "\\s*[a-zA-Z_$][a-zA-Z0-9_$]*\\s*(?=\\(.*\\)\\s*;)"
+		},
+		{
+			"name" : "mapper",
+			"match" : "[a-zA-Z_$][a-zA-Z0-9_$]*"
+		},
+		{
+			"name" : "text",
+			"match" : "\\s+"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment",
+					"begin": "\/\/",
+					"beginCaptures": {
+						"1": {
+							"name": "comment"
+						}
+					},
+					"end": "$"
+				}
+			]
+		}
+	}
+}
