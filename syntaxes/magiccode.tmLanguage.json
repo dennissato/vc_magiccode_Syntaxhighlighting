@@ -7,18 +7,35 @@
 			"include": "#comments"
 		},
 		{
-			"match": "\\b(break|continue|do|else|for|if|return|while)\\b",
-			"name": "keyword.control.magiccode"
+			"include": "#blockcomments"
 		},
 		{
-			"match": "^\\s*((#)(magic-onetime|skill|magic-repeate))\\b\\s*",
-			"name": "keyword.control.directive.$3.magiccode"
+			"include": "#strings"
 		},
 		{
-			"match": "0[xX][0-9a-fA-F]+\\b",
-			"name": "constant.numeric"
+			"name" : "keyword",
+			"match" : "#(?:magic-onetime|magic-repeate|skill)\\b"
 		},
-		
+		{
+			"name" : "keyword",
+			"match" : "#(?:include|main|init)\\b"
+		},
+		{
+			"name" : "storage.type",
+			"match" : "\\s*?(?:void|int|string|float)\\s+?(?=[a-zA-Z_$][a-zA-Z0-9_$]*\\s*?[(])"
+		},
+		{
+			"name" : "storage.type",
+			"match" : "\\s*[a-zA-Z_$][a-zA-Z0-9_$]*\\s+(?=(?:[a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(?:\\=.*)*;)"
+		},
+		{
+			"name": "keyword.control.magiccode",
+			"match": "\\b(break|continue|do|else|for|if|return|while|int|float|string|ref)\\b"
+		},
+		{
+			"name": "constant.numeric",
+			"match": "0[xX][0-9a-fA-F]+\\b"
+		},
 		{
 			"name" : "constant.numeric",
 			"match" : "0[bB][0-1_]+\\b"
@@ -30,14 +47,6 @@
 		{
 			"name" : "keyword.operator",
 			"match" : "--|\\+\\+|[-\\+\\*/!<>=]=?"
-		}, 
-		{
-			"name" : "keyword",
-			"match" : "#(?:include|main|init)\\b"
-		},
-		{
-			"name" : "keyword",
-			"match" : "#(?:magic-onetime|magic-repeate|skill)\\b"
 		},
 		{
 			"name" : "keyword",
@@ -46,14 +55,6 @@
 		{
 			"name" : "keyword",
 			"match" : "enum\\b"
-		},
-		{
-			"name" : "storage.type",
-			"match" : "\\s*?(?:void|int|string|float)\\s+?(?=[a-zA-Z_$][a-zA-Z0-9_$]*\\s*?[(])"
-		},
-		{
-			"name" : "storage.type",
-			"match" : "\\s*[a-zA-Z_$][a-zA-Z0-9_$]*\\s+(?=(?:[a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(?:\\=.*)*;)"
 		},
 		{
 			"name" : "function",
@@ -72,14 +73,37 @@
 		"comments": {
 			"patterns": [
 				{
-					"name": "comment",
+					"name": "comment.line",
 					"begin": "\/\/",
 					"beginCaptures": {
 						"1": {
-							"name": "comment"
+							"name": "comment.line"
 						}
 					},
 					"end": "$"
+				}
+			]
+		},
+		"blockcomments": {
+			"patterns": [
+				{
+					"name": "comment.block",
+					"begin": "\/\\*",
+					"beginCaptures": {
+						"1": {
+							"name": "comment.block"
+						}
+					},
+					"end": "\\*\/"
+				}
+			]
+		},
+		"strings":{
+			"patterns": [
+				{
+					"name": "string",
+					"begin": "\\s*\"",
+					"end": "\""
 				}
 			]
 		}
