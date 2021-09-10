@@ -3,10 +3,14 @@
     "name": "magiccode",
     "displayName": "MagicCode",
     "description": "MagicCode for Visual Studio Code",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "engines": {
         "vscode": "^1.58.0"
     },
+    "repository": {
+		"type": "git",
+		"url": "https://github.com/dennissato/vc_magiccode_Syntaxhighlighting"
+	},
     "categories": [
         "Programming Languages"
     ],
