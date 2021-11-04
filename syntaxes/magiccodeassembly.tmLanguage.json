@@ -1,0 +1,111 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MagicCodeAssembly",
+	"scopeName": "source.magiccodeassembly",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#blockcomments"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"name" : "keyword",
+			"match" : "#(?:magic-onetime|magic-repeate|skill)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "#(?:include|main|init)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "\\b(?:MOV|ADD|ADDI|SUB|IMUL|IDIV|POP|PUSH|PUSHI|PUSHF|PUSHS|CALL|RET|JMP|JE|JNE|CMP|SETE|SETNE|SETL|SETNL|MEMCOPY|NOP|DEBUG|DEBUGS|DEBUGPUSH)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "\\b(?:GWST_LIB|GWST_MAG|GWST_SMAG|GWST_UI|GWST_MEPH|GWST_WAMAG|SYSTEM|DEBUG_LOG|MAGICEND)\\b"
+		},
+		{
+			"name" : "keyword.control",
+			"match" : "\\b(ZERO_I|ZERO_S|ZERO_F|RAX|RDI|RSI|RDX|RCX|R8|R9|RSP|RBP|RGP|RAXP|RS1|RS2|RS3|RS4|RS5|RS6|RF1|RF2|RF3|RF4|RF5|RF6)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "\\b(?:mov|add|addi|sub|imul|idiv|pop|push|pushi|pushf|pushs|call|ret|jmp|je|jne|cmp|sete|setne|setl|setnl|memcopy|nop|debug|debugs|debugpush)\\b"
+		},
+		{
+			"name" : "keyword",
+			"match" : "\\b(?:gwst_lib|gwst_mag|gwst_smag|gwst_ui|gwst_meph|gwst_wamag|system|debug_log|magicend)\\b"
+		},
+		{
+			"name" : "keyword.control",
+			"match" : "\\b(zero_i|zero_s|zero_f|rax|rdi|rsi|rdx|rcx|r8|r9|rsp|rbp|rgp|raxp|rs1|rs2|rs3|rs4|rs5|rs6|rf1|rf2|rf3|rf4|rf5|rf6)\\b"
+		},
+		{
+			"name": "constant.numeric",
+			"match": "0[xX][0-9a-fA-F]+\\b"
+		},
+		{
+			"name" : "constant.numeric",
+			"match" : "0[bB][0-1_]+\\b"
+		},
+		{
+			"name" : "constant.numeric",
+			"match" : "[+-]?\\d+(?:(?:\\.\\d*)?(F|f)?)\\b"
+		},
+		{
+			"name" : "keyword.other",
+			"match": "[a-zA-Z_$][a-zA-Z0-9_$]*\\s*:"
+		},
+		{
+			"name" : "mapper",
+			"match" : "[a-zA-Z_$][a-zA-Z0-9_$]*"
+		},
+		{
+			"name" : "text",
+			"match" : "\\s+"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line",
+					"begin": "\/\/",
+					"beginCaptures": {
+						"1": {
+							"name": "comment.line"
+						}
+					},
+					"end": "$"
+				}
+			]
+		},
+		"blockcomments": {
+			"patterns": [
+				{
+					"name": "comment.block",
+					"begin": "\/\\*",
+					"beginCaptures": {
+						"1": {
+							"name": "comment.block"
+						}
+					},
+					"end": "\\*\/"
+				}
+			]
+		},
+		"strings":{
+			"patterns": [
+				{
+					"name": "string",
+					"begin": "\\s*\"",
+					"end": "\""
+				}
+			]
+		}
+	}
+}
