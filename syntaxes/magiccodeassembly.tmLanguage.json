@@ -22,7 +22,7 @@
 		},
 		{
 			"name" : "keyword",
-			"match" : "\\b(?:MOV|ADD|ADDI|SUB|IMUL|IDIV|POP|PUSH|PUSHI|PUSHF|PUSHS|CALL|RET|JMP|JE|JNE|CMP|SETE|SETNE|SETL|SETNL|MEMCOPY|NOP|DEBUG|DEBUGS|DEBUGPUSH)\\b"
+			"match" : "\\b(?:MOV|MOVI|MOVS|MOVF|ADD|ADDI|ADDS|ADDF|SUB|SUBI|SUBF|IMUL|IMULI|IMULF|IDIV|IDIVI|IDIVF|POP|PUSH|PUSHI|PUSHF|PUSHS|CALL|RET|JMP|JE|JNE|CMP|SETE|SETNE|SETL|SETNL|MEMCOPY|NOP|DEBUG|DEBUGPUSH)\\b"
 		},
 		{
 			"name" : "keyword",
@@ -30,11 +30,11 @@
 		},
 		{
 			"name" : "keyword.control",
-			"match" : "\\b(ZERO_I|ZERO_S|ZERO_F|RAX|RDI|RSI|RDX|RCX|R8|R9|RSP|RBP|RGP|RAXP|RS1|RS2|RS3|RS4|RS5|RS6|RF1|RF2|RF3|RF4|RF5|RF6)\\b"
+			"match" : "\\b(ZERO_I|ZERO_S|ZERO_F|RI1|RI2|RI3|RI4|RI5|RI6|RI7|RI1P|RSP|RBP|RGP|RAXP|RS1|RS2|RS3|RS4|RS5|RS6|RF1|RF2|RF3|RF4|RF5|RF6)\\b"
 		},
 		{
 			"name" : "keyword",
-			"match" : "\\b(?:mov|add|addi|sub|imul|idiv|pop|push|pushi|pushf|pushs|call|ret|jmp|je|jne|cmp|sete|setne|setl|setnl|memcopy|nop|debug|debugs|debugpush)\\b"
+			"match" : "\\b(?:mov|movi|movs|movf|add|addi|adds|addf|sub|subi|subf|imul|imuli|imulf|idiv|idivi|idivf|pop|push|pushi|pushf|pushs|call|ret|jmp|je|jne|cmp|sete|setne|setl|setnl|memcopy|nop|debug|debugpush)\\b"
 		},
 		{
 			"name" : "keyword",
@@ -42,7 +42,7 @@
 		},
 		{
 			"name" : "keyword.control",
-			"match" : "\\b(zero_i|zero_s|zero_f|rax|rdi|rsi|rdx|rcx|r8|r9|rsp|rbp|rgp|raxp|rs1|rs2|rs3|rs4|rs5|rs6|rf1|rf2|rf3|rf4|rf5|rf6)\\b"
+			"match" : "\\b(zero_i|zero_s|zero_f|ri1|ri2|ri3|ri4|ri5|ri6|ri7|ri1p|rsp|rbp|rgp|raxp|rs1|rs2|rs3|rs4|rs5|rs6|rf1|rf2|rf3|rf4|rf5|rf6)\\b"
 		},
 		{
 			"name": "constant.numeric",
