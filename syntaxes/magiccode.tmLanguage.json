@@ -3,71 +3,87 @@
 	"name": "MagicCode",
 	"scopeName": "source.magiccode",
 	"patterns": [
+		{ "include": "#irfb" },
+		{ "include": "#normal" },
 		{
-			"include": "#comments"
-		},
-		{
-			"include": "#blockcomments"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"name" : "keyword",
-			"match" : "#(?:magic-onetime|magic-repeate|skill)\\b"
-		},
-		{
-			"name" : "keyword",
-			"match" : "#(?:include|main|init)\\b"
-		},
-		{
-			"name": "keyword.control.magiccode",
-			"match": "\\s*(while|for|switch|if|else|case|break|continue|return|ref)\\b"
-		},
-		{
-			"include": "#functiondef"
-		},
-		{
-			"include": "#storage_magiccode"
-		},
-		{
-			"name": "constant.numeric",
-			"match": "0[xX][0-9a-fA-F]+\\b"
-		},
-		{
-			"name" : "constant.numeric",
-			"match" : "0[bB][0-1_]+\\b"
-		},
-		{
-			"name" : "constant.numeric",
-			"match" : "[+-]?\\d+(?:(?:\\.\\d*)?(F|f)?)\\b"
-		},
-		{
-			"name" : "keyword.operator",
-			"match" : "--|\\+\\+|[-\\+\\*/!<>=]=?"
-		},
-		{
-			"name" : "keyword",
-			"match" : "struct\\b"
-		},
-		{
-			"name" : "keyword",
-			"match" : "enum\\b"
-		},
-		{
-			"name" : "keyword.other",
-			"match": "[a-zA-Z_$][a-zA-Z0-9_$]*\\s*:"
-		},
-		{
-			"name" : "mapper",
-			"match" : "[a-zA-Z_$][a-zA-Z0-9_$]*"
-		},
-		{
-			"name" : "text",
-			"match" : "\\s+"
+			"name":"text",
+			"match": "\\s*"
 		}
 	],
 	"repository": {
+		"irfb":{
+			"patterns": [
+				{
+					"name" : "magiccode.irfb",
+					"begin": "(\/\/\/irfb start)",
+					"beginCaptures": {
+						"1" : { "name" : "magiccode.irfb.prefix.start" }
+					},
+					"end": "(\/\/\/irfb end)",
+					"endCaptures": {
+						"1" : { "name" : "magiccode.irfb.prefix.end" }
+					},
+					"patterns": [
+						{ "include": "#comments" },
+						{ "include": "#blockcomments" },
+						{ "include": "#preprocess" },
+						{ "include": "#irfb_enum_define" },
+						{ "include": "#irfb_struct_define" },
+						{ "include": "#irfb_function_define" },
+						{ "include": "#irfb_global_variable_define" },
+						{
+							"name": "invalid",
+							"match": "."
+						},
+						{
+							"name": "text",
+							"match": "\\s+"
+						}
+					]
+				}
+			]
+		},
+		"normal":{
+			"patterns": [
+				{
+					"name" : "magiccode.normal",
+					"begin": "^",
+					"end": "\\z|(?=\/\/\/irfb start)",
+					"patterns": [
+						{ "include": "#comments" },
+						{ "include": "#blockcomments" },
+						{ "include": "#preprocess" },
+						{ "include": "#keywords" },
+						{ "include": "#strings" },
+						{ "include": "#enum" },
+						{ "include": "#struct" },
+						{ "include": "#function_define" },
+						{ "include": "#variable_define" },
+						{ "include": "#function_call" },
+						{ "include": "#numerics" },
+						{
+							"name" : "keyword.operator",
+							"match" : "--|\\+\\+|[-\\+\\*/!<>=]=?"
+						},
+						{
+							"name" : "keyword.other",
+							"match": "[a-zA-Z_$][a-zA-Z0-9_$]*\\s*:"
+						},
+						{
+							"name" : "mapper",
+							"match" : "[a-zA-Z_$][a-zA-Z0-9_$]*"
+						},
+						{
+							"name" : "text",
+							"match" : "\\s+"
+						}
+					]
+				}
+			]
+		},
+
+
+
 		"comments": {
 			"patterns": [
 				{
@@ -96,6 +112,399 @@
 				}
 			]
 		},
+
+
+		"irfb_enum_define":{
+			"patterns": [
+				{
+					"name" : "magiccode.enum",
+					"begin": "\\s*(enum)\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"beginCaptures": {
+						"1" : { "name": "keyword" },
+						"2" : { "name": "magiccode.enum.ident" }
+					},
+					"end": ";|(?=\/\/\/irfb end)",
+					"patterns": [
+						{ "inlcue" : "#comments" },
+						{ "inlcue" : "#blockcomments" },
+						{
+							"name":"magiccode.enum.block",
+							"begin": "{",
+							"end": "}(?=;)|(?=\/\/\/irfb end)",
+							"patterns": [
+								{ "include": "#comments" },
+								{ "include": "#blockcomments" },
+								{
+									"name": "magiccode.enum.ident",
+									"match": "\\s*[a-zA-Z_$][a-zA-Z0-9_$]*\\s*=?\\s*(.*),",
+									"captures": { 
+										"1":{ "patterns" : [{"include": "#numeric_integer"}] }
+									}
+								},
+								{
+									"name": "invalid",
+									"match": "."
+								},
+								{
+									"name": "text",
+									"match": "\\s+"
+								}
+							]
+						},
+						{
+							"name" : "invalid",
+							"match": "."
+						},
+						{
+							"name": "text",
+							"match": "\\s+"
+						}
+					]
+				}
+			]
+		},
+		"irfb_struct_define":{
+			"patterns": [
+				{
+					"name" : "magiccode.struct",
+					"begin" : "struct\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"beginCaptures": {
+						"1" : { "name" : "magiccode.struct.ident" }
+					},
+					"end" : ";|(?=\/\/\/irfb end)",
+					"patterns": [
+						{
+							"name" : "magiccode.struct.block",
+							"begin": "{",
+							"end": "}(?=;)|(?=\/\/\/irfb end)",
+							"patterns": [
+								{ "include": "#comments" },
+								{ "include": "#blockcomments" },
+								{
+									"name" : "magiccode.struct.member",
+									"match" : "(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[.*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*);",
+									"captures": {
+										"1" : { "name" : "keyword" },
+										"2" : { "name" : "keyword" },
+										"3" : { "name" : "magiccode.member.arraysize" },
+										"4" : { "name" : "magiccode.member.ident" }
+									}
+								},
+								{
+									"name": "invalid",
+									"match": "."
+								},
+								{
+									"name": "text",
+									"match": "\\s+"
+								}
+							]
+						},
+						{
+							"name" : "invalid",
+							"match": "."
+						},
+						{
+							"name": "text",
+							"match": "\\s+"
+						}
+					]
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#blockcomments"
+				}
+			]
+		},
+		"irfb_global_variable_define":{
+			"patterns": [
+				{
+					"include": "#variable_define"
+				}
+			]
+		},
+		"irfb_function_define":{
+			"patterns": [
+				{
+					"name": "magiccode.irfb.function",
+					"begin": "(void|int|string|float)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\((.*)\\)",
+					"beginCaptures": {
+						"1":{ "name": "keyword" },
+						"2":{ "name": "magiccode.irfb.function.userdef" },
+						"3":{ "patterns": [{ "include": "#argument_define" }] }
+					},
+					"end": "(?<=})",
+					"patterns": [
+						{ "include": "#irfb_statement" },
+						{
+							"name": "invalid",
+							"match": "."
+						},
+						{
+							"name": "text",
+							"match": "\\s+"
+						}
+					]
+				}
+			]
+		},
+		"irfb_statement":{
+			"patterns": [
+				{ "include": "#comments" },
+				{ "include": "#blockcomments" },
+				{ "include": "#irfb_forblock" },
+				{ "include": "#irfb_ifblock" },
+				{ "include": "#irfb_block" },
+				{ "include": "#function_call" },
+				{ "include": "#variable_define" },
+
+				{
+					"name": "invalid",
+					"match": "."
+				},
+				{
+					"name": "text",
+					"match": "\\s+"
+				}
+			]
+		},
+		"irfb_block":{
+			"begin": "{",
+			"end": "}",
+			"patterns": [{ "include": "#irfb_statement" }]
+		},
+		"irfb_ifblock":{
+			"name": "magiccode.irfb.if",
+			"begin": "if\\s*\\((\\s|.*)\\)\\s*{",
+			"end": "}",
+			"patterns": [
+				{ "include": "#irfb_elseifblock" },
+				{ "include": "#irfb_elseblock" },
+				{ "include": "#irfb_statement" },
+				{
+					"name": "invalid",
+					"match": "."
+				},
+				{
+					"name": "text",
+					"match": "\\s+"
+				}
+			]
+		},
+		"irfb_elseifblock":{
+			"name": "magiccode.irfb.elseif",
+			"begin": "}\\s*else if\\s*\\(\\)\\s*{",
+			"end": "(?=})",
+			"patterns": [{ "include": "#irfb_statement" } ]
+		},
+		"irfb_elseblock":{
+			"name": "magiccode.irfb.else",
+			"begin": "}\\s*else\\s*\\(\\)\\s*{",
+			"end": "(?=})",
+			"patterns": [{ "include": "#irfb_statement" } ]
+		},
+		"irfb_forblock":{
+			"patterns": [
+				{
+					"name": "magiccode.irfb.block",
+					"begin": "\\s*(for)\\s*\\((.*)\\)\\s*({)",
+					"beginCaptures": {
+						"1":{ "name" : "magiccodefor" },
+						"2":{ "patterns": [
+								{ "include": "#variable_define" }
+							]
+						},
+						"3":{ "name" : "magiccodefor.block" }
+					},
+					"end": "\\s*(})",
+					"endCaptures": {
+						"1":{  "name": "magiccodefor.block" }
+					},
+					"patterns": [
+						{ "include": "#statement" }
+					]
+				}
+			]
+		},
+		"irfb_variable_define":{
+			"patterns": [
+				{
+					"name": "magiccode.irfb.variabledefine",
+					"match" : "\\s*?(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[.*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(=\\s*.*)?;",
+					"captures": {
+						"1" : { "name" : "keyword" },
+						"2" : { "name" : "keyword" },
+						"3" : { "name" : "magiccode.identdef.arraysize" },
+						"4" : { "name" : "magiccode.identdef.ident" },
+						"5" : { "name" : "magiccode.identdef.ident" }
+					}
+				}
+			]
+		},
+		"irfb_assigne":{
+			"patterns": [
+				{
+					"name": "magiccode.irfb.assigne",
+					"match": "([a-zA-Z_$][a-zA-Z0-9_$\\.]*)\\s*=|+=|-=|*=|/=|\\s*(.*);",
+					"captures": {
+						"2" :{
+							"patterns": [
+								{ "include": "irfb_expression_block" },
+								{
+									"name": "invalid",
+									"match": "."
+								},
+								{
+									"name": "text",
+									"match": "\\s+"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"irfb_expression_block":{
+			"patterns": [
+				{
+					"begin": "\\(",
+					"end": "\\)",
+					"patterns": [
+						{ "include": "irfb_expression_block" },
+						{
+							"name": "",
+							"match": "."
+						},
+						{
+							"name": "text",
+							"match": "\\s+"
+						}
+					]
+				}
+			]
+		},
+
+		"preprocess":{
+			"patterns": [ 
+				{
+					"name" : "keyword",
+					"match" : "\\s*#(?:magic-onetime|magic-repeate|skill)\\b"
+				},
+				{
+					"name" : "magiccode.preprocess",
+					"begin": "\\s*(#include|#main|#init)",
+					"beginCaptures": {
+						"1":{ "name":"keyword" },
+						"2":{ "name":"string" }
+					},
+					"end": "\\s*(\".*\")",
+					"endCaptures": {
+						"1":{ "name" : "string" }
+					}
+				}
+			]
+		},
+		"enum":{
+			"patterns": [
+				{
+					"name": "magiccode.enum",
+					"match": "(enum)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"captures": {
+						"1":{ "name": "keyword" },
+						"2":{ "name": "magiccode.enum.ident" }
+					}
+				}
+			]
+		},
+		"struct":{
+			"patterns": [
+				{
+					"name": "magiccode.struct",
+					"match": "(struct)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"captures": {
+						"1":{ "name": "keyword" },
+						"2":{ "name": "magiccode.struct.ident" }
+					}
+				}
+			]
+		},
+		"function_define":{
+			"patterns": [
+				{
+					"name": "magiccode.function.define",
+					"match": "\\s*(void|int|string|float)\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\(([a-zA-Z0-9_.,&\\s\\[\\]$]*)\\)",
+					"captures": {
+						"1":{ "name": "keyword" },
+						"2":{ "name": "magiccode.function.userdef" },
+						"3":{ "patterns": [
+							{ "include": "#variable_define" },
+							{
+								"name" : "magiccode.function.define.argcomma",
+								"match": ","
+							},
+							{
+								"name" : "invalid",
+								"match": ".?"
+							}
+						]}
+					}
+				}
+			]
+		},
+		"function_call":{
+			"patterns": [
+				{
+					"name": "magiccode.function.call",
+					"begin": "\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\(",
+					"beginCaptures": {
+						"1":{ 
+							"patterns": [
+								{
+									"name": "magiccode.function.call.builtin",
+									"match": "debug_log|gwst_lib|gwst_mag|gwst_smag|gwst_wamag|gwst_ui|gwst_meph|sys_int_to_str|sys_float_to_str|sys_str_to_int"
+								},
+								{
+									"name": "magiccode.function.call.userdef",
+									"match": "([a-zA-Z_$][a-zA-Z0-9_$]*)"
+								}
+							]}
+					},
+					"end": "\\)\\s*;",
+					"patterns": [
+						{ "include": "#comments" },
+						{ "include": "#blockcomments" },
+						{
+							"name" : "mapper",
+							"match" : ".*"
+						}
+					]
+				}
+			]
+		},
+		"variable_define":{
+			"patterns": [
+				{
+					"name" : "magiccode.variable.define",
+					"match" : "\\s*?(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[.*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*",
+					"captures": {
+						"1" : { "name" : "keyword" },
+						"2" : { "name" : "keyword" },
+						"3" : { "name" : "magiccode.identdef.arraysize" },
+						"4" : { "name" : "magiccode.identdef.ident" }
+					}
+				}
+			]
+		},
+		"keywords":{
+			"patterns": [
+				{
+					"name": "keyword",
+					"match": "\\s*(while|for|switch|if|else|case|break|continue|return|ref)\\b"
+				}
+			]
+		},
 		"strings":{
 			"patterns": [
 				{
@@ -105,44 +514,34 @@
 				}
 			]
 		},
-		"functiondef":{
+		"numeric_integer":{
 			"patterns": [
 				{
-					"name": "function",
-					"begin": "\\s*(void|int|string|float)\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\(",
-					"beginCaptures": {
-						"1":{ "name":"keyword" },
-						"2":{ "name":"function" }
-					},
-					"end": "\\)",
-					"patterns": [
-						{
-							"include": "#comments"
-						},
-						{
-							"include": "#blockcomments"
-						},
-						{
-							"include": "#storage_magiccode"
-						}
-					]
+					"name": "constant.numeric",
+					"match": "0[xX][0-9a-fA-F]+\\b"
+				},
+				{
+					"name" : "constant.numeric",
+					"match" : "0[bB][0-1_]+\\b"
+				},
+				{
+					"name" : "constant.numeric",
+					"match" : "[+-]?\\d+\\b"
 				}
 			]
 		},
-		"storage_magiccode":{
+		"numeric_float":{
 			"patterns": [
 				{
-					"name": "keyword.control.magiccode",
-					"match": "\\s*(ref)\\b"
-				},
-				{
-					"name" : "storage.type",
-					"match" : "\\s*?(?:void|int|string|float)(\\[.*\\])*\\s+?(?=[a-zA-Z_$][a-zA-Z0-9_$]*\\s*)"
-				},
-				{
-					"name" : "storage.type",
-					"match" : "\\s*[a-zA-Z_$][a-zA-Z0-9_$]*(\\[.*\\])*\\s+(?=(?:[a-zA-Z_$][a-zA-Z0-9_$]*))"
+					"name" : "constant.numeric",
+					"match" : "[+-]?\\d+(?:(?:\\.\\d*)(F|f))\\b"
 				}
+			]
+		},
+		"numerics":{
+			"patterns": [
+				{ "include": "#numeric_integer" },
+				{ "include": "#numeric_float" }
 			]
 		}
 	}
