@@ -24,6 +24,14 @@
 	},
 	"tokenColors": [
 		{
+			"scope":[
+				"magiccode.irfb.prefix"
+			],
+			"settings": {
+				"foreground": "#9b18d8"
+			}
+		},
+		{
 			"scope": [
 				"gwst",
 			],
@@ -63,6 +71,53 @@
 				"foreground": "#c23737"
 			}
 		},
+		{
+			"scope": [
+				"magiccode.function.call.builtin",
+			],
+			"settings": {
+				"foreground": "#dd31aa"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.function.userdef",
+				"magiccode.function.call.userdef"
+			],
+			"settings": {
+				"foreground": "#DCDCAA"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.identdef.arraysize",
+			],
+			"settings": {
+				"foreground": "#adfd19"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.enum.ident",
+				"magiccode.struct.ident",
+			],
+			"settings": {
+				"foreground": "#94ff1b"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.identdef.ident",
+			],
+			"settings": {
+				"foreground": "#6fe9e9"
+			}
+		},
+
+
+
+
+		
 		{
 			"scope": [
 				"meta.embedded",
