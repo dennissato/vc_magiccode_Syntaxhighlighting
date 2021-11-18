@@ -76,7 +76,7 @@
 				"magiccode.function.call.builtin",
 			],
 			"settings": {
-				"foreground": "#dd31aa"
+				"foreground": "#ec6b14"
 			}
 		},
 		{
@@ -85,7 +85,17 @@
 				"magiccode.function.call.userdef"
 			],
 			"settings": {
-				"foreground": "#DCDCAA"
+				"foreground": "#dbdb59"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.normal.semicoloncomma",
+				"magiccode.function.define.comma",
+				"magiccode.function.call.comma"
+			],
+			"settings": {
+				"foreground": "#fc8865"
 			}
 		},
 		{
@@ -93,7 +103,7 @@
 				"magiccode.identdef.arraysize",
 			],
 			"settings": {
-				"foreground": "#adfd19"
+				"foreground": "#dc67ff"
 			}
 		},
 		{
@@ -102,7 +112,7 @@
 				"magiccode.struct.ident",
 			],
 			"settings": {
-				"foreground": "#94ff1b"
+				"foreground": "#8653c9"
 			}
 		},
 		{
@@ -110,8 +120,15 @@
 				"magiccode.identdef.ident",
 			],
 			"settings": {
-				"foreground": "#6fe9e9"
+				"foreground": "#34f59b"
 			}
+		},
+		{
+			"scope": [
+				"magiccode.case.ident",
+				"magiccode.index.specify"
+			],
+			"settings": { "foreground": "#e008d6f5", }
 		},
 
 
