@@ -21,39 +21,39 @@
 			"match" : "#(?:include|main|init)\\b"
 		},
 		{
-			"name" : "mnemonic",
+			"name" : "magiccode.mnemonic",
 			"match" : "\\b(?:MOV|MOVI|MOVS|MOVF|ADD|ADDI|ADDS|ADDF|SUB|SUBI|SUBF|IMUL|IMULI|IMULF|IDIV|IDIVI|IDIVF|POP|PUSH|PUSHI|PUSHF|PUSHS|CALL|RET|JMP|JE|JNE|CMP|SETE|SETNE|SETL|SETNL|MEMCOPY|SAVESPS|LOADSPS|NOP|DEBUG|DEBUGPUSH)\\b"
 		},
 		{
-			"name" : "mnemonic",
+			"name" : "magiccode.mnemonic",
 			"match" : "\\b(?:mov|movi|movs|movf|add|addi|adds|addf|sub|subi|subf|imul|imuli|imulf|idiv|idivi|idivf|pop|push|pushi|pushf|pushs|call|ret|jmp|je|jne|cmp|sete|setne|setl|setnl|memcopy|savesps|loadsps|nop|debug|debugpush)\\b"
 		},
 		{
-			"name" : "gwst",
+			"name" : "magiccode.gwst",
 			"match" : "\\b(?:GWST_LIB|GWST_MAG|GWST_SMAG|GWST_UI|GWST_MEPH|GWST_WAMAG|SYSTEM)\\b"
 		},
 		{
-			"name" : "gwst",
+			"name" : "magiccode.gwst",
 			"match" : "\\b(?:gwst_lib|gwst_mag|gwst_smag|gwst_ui|gwst_meph|gwst_wamag|system)\\b"
 		},
 		{
-			"name" : "mcend",
+			"name" : "magiccode.mcend",
 			"match" : "\\b(?:MAGICEND|magicend)\\b"
 		},
 		{
-			"name" : "operands",
+			"name" : "magiccode.operands",
 			"match" : "\\b(ZERO_I|ZERO_S|ZERO_F|RI1|RI2|RI3|RI4|RI5|RI6|RI7|RI1P|RSP|RBP|RGP|RAXP|RS1|RS2|RS3|RS4|RS5|RS6|RF1|RF2|RF3|RF4|RF5|RF6)\\b"
 		},
 		{
-			"name" : "operands",
+			"name" : "magiccode.operands",
 			"match" : "\\b(zero_i|zero_s|zero_f|ri1|ri2|ri3|ri4|ri5|ri6|ri7|ri1p|rsp|rbp|rgp|raxp|rs1|rs2|rs3|rs4|rs5|rs6|rf1|rf2|rf3|rf4|rf5|rf6)\\b"
 		},
 		{
-			"name" : "mcdebug",
+			"name" : "magiccode.mcdebug",
 			"match" : "\\b(?:DEBUG_LOG|DEBUG_SLOG|DEBUG_RLOG|DEBUG_PUSH|DEBUG_PAUSE)\\b"
 		},
 		{
-			"name" : "mcdebug",
+			"name" : "magiccode.mcdebug",
 			"match" : "\\b(?:debug_log|debug_slog|debug_rlog|debug_push|debug_pause)\\b"
 		},
 		{
