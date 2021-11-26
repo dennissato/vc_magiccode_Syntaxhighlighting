@@ -3,7 +3,7 @@
 魔法開発言語のMagicCodeのシンタックスハイライトです。
 MagicCodeのファイルの拡張子は.mcsです
 
-### 0.0.1 ～ 0.0.8
+### 0.0.1 ～ 0.0.9
 ・初期リリース
 
 ・コメント、ブロックコメント、文字
@@ -20,7 +20,14 @@ MagicCodeのファイルの拡張子は.mcsです
 
 ・irfb（input rules for beginners）の導入初期
 
-### 0.0.9
 ・テーマ色の修正
 
 ・アイコン設定
+
+### 0.1.0
+
+・irfb（input rules for beginners）の修正
+
+・テーマ色の修正
+
+・irfe（input rules for expert）の導入初期
