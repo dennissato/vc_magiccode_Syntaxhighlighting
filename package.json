@@ -3,7 +3,7 @@
 	"name": "magiccode",
 	"displayName": "MagicCode",
 	"description": "MagicCode for Visual Studio Code",
-	"version": "0.0.9",
+	"version": "0.1.0",
 	"icon": "MagicCode.png",
 	"engines": {
 		"vscode": "^1.58.0"
