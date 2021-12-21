@@ -110,7 +110,7 @@
 						},
 						{
 							"name": "magiccode.index.specify",
-							"match": "[a-zA-Z0-9_$]*\\s*:"
+							"match": "[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*\\s*:"
 						},
 						{
 							"include": "#numerics"
@@ -121,11 +121,11 @@
 						},
 						{
 							"name": "magiccode.variable.address",
-							"match": "&[a-zA-Z_$][a-zA-Z0-9_$\\.\\[\\]]*"
+							"match": "&[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\{\\};:\\.,<>=&]]*"
 						},
 						{
 							"name": "mapper",
-							"match": "[a-zA-Z_$][a-zA-Z0-9_$]*"
+							"match": "[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*"
 						},
 						{
 							"name": "text",
@@ -166,11 +166,11 @@
 							"include": "keywords"
 						},
 						{
-							"name": "keyword",
-							"match": "(void|int|float|string|enum|naming|struct|group)\\b"
+							"include": "#builtin"
 						},
 						{
-							"include": "#builtin"
+							"name": "keyword",
+							"match": "\\b(void|int|float|string|enum|naming|struct|group|boxs|ref)\\b"
 						},
 						{
 							"include": "#preprocess"
@@ -224,7 +224,7 @@
 		"irfb_enum_define": {
 			"patterns": [
 				{
-					"begin": "(enum|naming)\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"begin": "(enum|naming)\\s*([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)",
 					"beginCaptures": {
 						"1": {
 							"name": "magiccode.irfb.enum"
@@ -268,7 +268,7 @@
 									"include": "#blockcomments"
 								},
 								{
-									"match": "([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*=?\\s*(.*)(,)",
+									"match": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)\\s*=?\\s*(.*)(,)",
 									"captures": {
 										"1": {
 											"name": "magiccode.irfb.enum.member"
@@ -300,7 +300,7 @@
 		"irfb_struct_define": {
 			"patterns": [
 				{
-					"begin": "(struct|group)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"begin": "(struct|group)\\s+([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)",
 					"beginCaptures": {
 						"1": {
 							"name": "magiccode.irfb.struct"
@@ -338,7 +338,7 @@
 									"include": "#blockcomments"
 								},
 								{
-									"match": "(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[\\])?(\\[[a-zA-Z0-9_\\.$]*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*)(;)",
+									"match": "(ref\\s+)?(int|string|float|[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*|boxs<(int|float|string)>)((\\[[a-zA-Z0-9_\\.]*\\])*)\\s+?([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)(;)",
 									"captures": {
 										"1": {
 											"name": "magiccode.ref"
@@ -347,15 +347,15 @@
 											"name": "keyword"
 										},
 										"3": {
-											"name": "magiccode.identdef.arraysize"
+											"name": "magiccode.boxs.type"
 										},
 										"4": {
 											"name": "magiccode.identdef.arraysize"
 										},
-										"5": {
+										"6": {
 											"name": "magiccode.identdef.ident"
 										},
-										"6": {
+										"7": {
 											"name": "magiccode.irfb.semicoloncomma"
 										}
 									}
@@ -389,7 +389,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.irfb.function",
-					"begin": "(void|int|string|float)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(\\()(.*)(\\))",
+					"begin": "(void|int|string|float)\\s+([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)\\s*(\\()(.*)(\\))",
 					"beginCaptures": {
 						"1": {
 							"name": "keyword"
@@ -564,7 +564,7 @@
 								"2": {
 									"patterns": [
 										{
-											"match": "(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[.*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*)(\\s*\\=\\s*.*)?",
+											"match": "(ref\\s+)?(int|string|float|[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]])(\\[.*\\])*\\s+?([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)(\\s*\\=\\s*.*)?",
 											"captures": {
 												"1": {
 													"name": "magiccode.ref"
@@ -1136,7 +1136,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.irfb.function.call.only",
-					"begin": "([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(\\()",
+					"begin": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)\\s*(\\()",
 					"beginCaptures": {
 						"1": {
 							"patterns": [
@@ -1145,7 +1145,7 @@
 								},
 								{
 									"name": "magiccode.irfb.function.call.userdef",
-									"match": "([a-zA-Z_$][a-zA-Z0-9_$]*)"
+									"match": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)"
 								}
 							]
 						},
@@ -1188,7 +1188,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.irfb.function.call",
-					"begin": "([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*(\\()",
+					"begin": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:<>=&]]*)\\s*(\\()",
 					"beginCaptures": {
 						"1": {
 							"patterns": [
@@ -1197,7 +1197,7 @@
 								},
 								{
 									"name": "magiccode.irfb.function.call.userdef",
-									"match": "([a-zA-Z_$][a-zA-Z0-9_$]*)"
+									"match": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)"
 								}
 							]
 						},
@@ -1237,7 +1237,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.irfb.variable.define",
-					"begin": "(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[.*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"begin": "(ref\\s+)?(int|string|float|[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*|boxs<(int|float|string)>)((\\[[[[:word:]|[:punct:]][^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*\\])*)\\s+?([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)",
 					"beginCaptures": {
 						"1": {
 							"name": "magiccode.ref"
@@ -1246,9 +1246,12 @@
 							"name": "keyword"
 						},
 						"3": {
-							"name": "magiccode.identdef.arraysize"
+							"name": "magiccode.boxs.type"
 						},
 						"4": {
+							"name": "magiccode.identdef.arraysize"
+						},
+						"6": {
 							"name": "magiccode.identdef.ident"
 						}
 					},
@@ -1296,7 +1299,7 @@
 								},
 								{
 									"name": "magiccode.index.specify",
-									"match": "[a-zA-Z0-9_$]*\\s*:"
+									"match": "[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*\\s*:"
 								},
 								{
 									"include": "#strings"
@@ -1326,16 +1329,7 @@
 							"end": "(?=;)",
 							"patterns": [
 								{
-									"include": "#strings"
-								},
-								{
-									"include": "#numerics"
-								},
-								{
-									"include": "#irfb_function_call"
-								},
-								{
-									"include": "#irfb_variable"
+									"include": "#irfb_expression_primary"
 								},
 								{
 									"include": "#irfb_invalid_space"
@@ -1373,7 +1367,7 @@
 						},
 						{
 							"name": "magiccode.index.specify",
-							"match": "[a-zA-Z0-9_$]*\\s*:"
+							"match": "[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*\\s*:"
 						},
 						{
 							"include": "#strings"
@@ -1403,7 +1397,20 @@
 			"patterns": [
 				{
 					"name": "magiccode.irfb.stmt.variable",
-					"match": "&?[a-zA-Z_$][a-zA-Z0-9_\\.$]*"
+					"match": "&?[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:<>=&]]*(\\.|\\[([[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\)\\[\\],\\{\\};:<>=&]]+)\\]|[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};\\.:<>=&]]*)*",
+					"captures": {
+						"2": {
+							"patterns": [
+								{
+									"include": "#numerics"
+								},
+								{
+									"name": "mapper",
+									"match": "."
+								}
+							]
+						}
+					}
 				}
 			]
 		},
@@ -1411,7 +1418,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.irfb.expression",
-					"begin": "(?=[a-zA-Z_$])",
+					"begin": "(?=[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:<>=&]])",
 					"end": "(;)|(?=\/\/\/irfb end)",
 					"endCaptures": {
 						"1": {
@@ -1423,7 +1430,7 @@
 							"include": "#irfb_function_call"
 						},
 						{
-							"match": "([a-zA-Z_$][a-zA-Z0-9_\\.\\[\\]$]*)\\s*([-\\+\\*\\/]?\\=)\\s*(.*)(?=;)",
+							"match": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\{\\};:,<>=&]]*)\\s*([-\\+\\*\\/]?\\=)\\s*(.*)(?=;)",
 							"captures": {
 								"2": {
 									"name": "keyword.operator"
@@ -1438,7 +1445,7 @@
 							}
 						},
 						{
-							"match": "[a-zA-Z_$][a-zA-Z0-9_\\.$]*(--|\\+\\+)(?=;)",
+							"match": "[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*(--|\\+\\+)(?=;)",
 							"captures": {
 								"1": {
 									"name": "keyword.operator"
@@ -1472,6 +1479,158 @@
 				{
 					"name": "keyword.operator",
 					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+				},
+				{
+					"name": "mapper",
+					"match": "\\[|\\]"
+				},
+				{
+					"begin": "(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.start.1"
+						}
+					},
+					"end": "(\\))",
+					"endCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.end.1"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#irfb_expression_primary1"
+						}
+					]
+				},
+				{
+					"name": "text",
+					"match": "\\s+"
+				}
+			]
+		},
+		"irfb_expression_primary1": {
+			"patterns": [
+				{
+					"include": "#numerics"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#irfb_function_call"
+				},
+				{
+					"include": "#irfb_variable"
+				},
+				{
+					"name": "keyword.operator",
+					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+				},
+				{
+					"begin": "(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.start.2"
+						}
+					},
+					"end": "(\\))",
+					"endCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.end.2"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#irfb_expression_primary2"
+						}
+					]
+				},
+				{
+					"name": "text",
+					"match": "\\s+"
+				}
+			]
+		},
+		"irfb_expression_primary2": {
+			"patterns": [
+				{
+					"include": "#numerics"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#irfb_function_call"
+				},
+				{
+					"include": "#irfb_variable"
+				},
+				{
+					"name": "keyword.operator",
+					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+				},
+				{
+					"begin": "(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.start.3"
+						}
+					},
+					"end": "(\\))",
+					"endCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.end.3"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#irfb_expression_primary3"
+						}
+					]
+				},
+				{
+					"name": "text",
+					"match": "\\s+"
+				}
+			]
+		},
+		"irfb_expression_primary3": {
+			"patterns": [
+				{
+					"include": "#numerics"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#irfb_function_call"
+				},
+				{
+					"include": "#irfb_variable"
+				},
+				{
+					"name": "keyword.operator",
+					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+				},
+				{
+					"begin": "(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.start.4"
+						}
+					},
+					"end": "(\\))",
+					"endCaptures": {
+						"1": {
+							"name": "magiccode.expression.bracket.end.4"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#irfb_expression_primary"
+						}
+					]
 				},
 				{
 					"name": "text",
@@ -1566,7 +1725,7 @@
 		"enum": {
 			"patterns": [
 				{
-					"match": "(enum|naming)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"match": "(enum|naming)\\s+([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)",
 					"captures": {
 						"1": {
 							"name": "magiccode.enum"
@@ -1581,7 +1740,7 @@
 		"struct": {
 			"patterns": [
 				{
-					"match": "(struct|group)\\s+([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"match": "(struct|group)\\s+([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)",
 					"captures": {
 						"1": {
 							"name": "magiccode.struct"
@@ -1597,7 +1756,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.function.define",
-					"match": "(void|int|string|float)\\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\(([a-zA-Z0-9_.,&\\s\\[\\]$]*)\\)",
+					"match": "(void|int|string|float)\\s+([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)\\s*(\\()(.*)(\\))",
 					"captures": {
 						"1": {
 							"name": "keyword"
@@ -1605,7 +1764,7 @@
 						"2": {
 							"name": "magiccode.function.userdef"
 						},
-						"3": {
+						"4": {
 							"patterns": [
 								{
 									"include": "#variable_define"
@@ -1628,7 +1787,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.function.call",
-					"begin": "([a-zA-Z_$][a-zA-Z0-9_$]*)\\s*\\(",
+					"begin": "([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)\\s*\\(",
 					"beginCaptures": {
 						"1": {
 							"patterns": [
@@ -1637,7 +1796,7 @@
 								},
 								{
 									"name": "magiccode.function.call.userdef",
-									"match": "([a-zA-Z_$][a-zA-Z0-9_$]*)"
+									"match": "([[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)"
 								}
 							]
 						}
@@ -1675,7 +1834,7 @@
 			"patterns": [
 				{
 					"name": "magiccode.variable.define",
-					"match": "(ref\\s+)?(int|string|float|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\[\\])?(\\[[a-zA-Z0-9_\\.$]*\\])*\\s+?([a-zA-Z_$][a-zA-Z0-9_$]*)",
+					"match": "(ref\\s+)?(int|string|float|[[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*|boxs<(int|float|string)>)((\\[[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:<>=&]]*\\])*)\\s+?([[:^digit:]&&[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]][[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:\\.<>=&]]*)",
 					"captures": {
 						"1": {
 							"name": "magiccode.ref"
@@ -1684,12 +1843,12 @@
 							"name": "keyword"
 						},
 						"3": {
-							"name": "magiccode.identdef.arraysize"
+							"name": "magiccode.boxs.type"
 						},
 						"4": {
 							"name": "magiccode.identdef.arraysize"
 						},
-						"5": {
+						"6": {
 							"name": "magiccode.identdef.ident"
 						}
 					}
@@ -1740,15 +1899,15 @@
 			"patterns": [
 				{
 					"name": "constant.numeric",
-					"match": "0[xX][0-9a-fA-F]+\\b"
+					"match": "\\b0[xX][0-9a-fA-F]+\\b"
 				},
 				{
 					"name": "constant.numeric",
-					"match": "0[bB][0-1_]+\\b"
+					"match": "\\b0[bB][0-1_]+\\b"
 				},
 				{
 					"name": "constant.numeric",
-					"match": "[+-]?\\d+\\b"
+					"match": "\\b[+-]?\\d+\\b"
 				}
 			]
 		},
@@ -1756,7 +1915,7 @@
 			"patterns": [
 				{
 					"name": "constant.numeric",
-					"match": "[+-]?\\d+(?:(?:\\.\\d*)(F|f))\\b"
+					"match": "\\b[+-]?\\d+(?:(?:\\.\\d*)(F|f))\\b"
 				}
 			]
 		},
@@ -1773,15 +1932,99 @@
 		"variable_enum": {
 			"patterns": [
 				{
-					"match": "[a-zA-Z_$][a-zA-Z0-9_\\.$]*"
+					"match": "[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:<>=&]]*"
 				}
 			]
 		},
 		"builtin": {
 			"patterns": [
 				{
-					"name": "magiccode.builtin",
-					"match": "debug_log|debug_pause|gwst_lib|gwst_mag|gwst_smag|gwst_wamag|gwst_ui|gwst_meph|sys_int_to_str|sys_float_to_str|sys_str_to_int"
+					"include": "#buildtin_debug"
+				},
+				{
+					"include": "#buildtin_gwst"
+				},
+				{
+					"include": "#buildtin_sys"
+				},
+				{
+					"include": "#buildtin_boxs"
+				}
+			]
+		},
+		"buildtin_debug": {
+			"patterns": [
+				{
+					"name": "magiccode.builtin.debug",
+					"match": "(debug)\\.(log|pause)",
+					"captures": {
+						"1": {
+							"name": "magiccode.builtin.call.head"
+						},
+						"2": {
+							"name": "magiccode.builtin.call.body1"
+						}
+					}
+				}
+			]
+		},
+		"buildtin_gwst": {
+			"patterns": [
+				{
+					"name": "magiccode.builtin.gwst",
+					"match": "(gwst)\\.(lib|mag|smag|wamag|ui|mep)",
+					"captures": {
+						"1": {
+							"name": "magiccode.builtin.call.head"
+						},
+						"2": {
+							"name": "magiccode.builtin.call.body1"
+						}
+					}
+				}
+			]
+		},
+		"buildtin_sys": {
+			"patterns": [
+				{
+					"name": "magiccode.builtin.gwst",
+					"match": "((sys)\\.(int|float)\\.(tostr))|((sys)\\.(string)\\.(toint))",
+					"captures": {
+						"2": {
+							"name": "magiccode.builtin.call.head"
+						},
+						"3": {
+							"name": "magiccode.builtin.call.body1"
+						},
+						"4": {
+							"name": "magiccode.builtin.call.body2"
+						},
+						"6": {
+							"name": "magiccode.builtin.call.head"
+						},
+						"7": {
+							"name": "magiccode.builtin.call.body1"
+						},
+						"8": {
+							"name": "magiccode.builtin.call.body2"
+						}
+					}
+				}
+			]
+		},
+		"buildtin_boxs": {
+			"patterns": [
+				{
+					"name": "magiccode.builtin.gwst",
+					"match": "(boxs)\\.(allocate|release)",
+					"captures": {
+						"1": {
+							"name": "magiccode.builtin.call.head"
+						},
+						"2": {
+							"name": "magiccode.builtin.call.body1"
+						}
+					}
 				}
 			]
 		},
