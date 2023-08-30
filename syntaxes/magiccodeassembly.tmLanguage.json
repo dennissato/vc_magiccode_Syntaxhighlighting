@@ -22,11 +22,11 @@
 		},
 		{
 			"name" : "magiccode.mnemonic",
-			"match" : "\\b(?:MOV|MOVI|MOVS|MOVF|ADD|ADDI|ADDS|ADDF|SUB|SUBI|SUBF|IMUL|IMULI|IMULF|IDIV|IDIVI|IDIVF|POP|PUSH|PUSHI|PUSHF|PUSHS|CALL|RET|JMP|JE|JNE|CMP|SETE|SETNE|SETL|SETNL|MEMCOPY|SAVESPS|LOADSPS|NOP|DEBUG|DEBUGPUSH)\\b"
+			"match" : "\\b(?:MOV|MOVI|MOVS|MOVF|ADD|ADDI|ADDS|ADDF|SUB|SUBI|SUBF|IMUL|IMULI|IMULF|IDIV|IDIVI|IDIVF|POP|PUSH|PUSHI|PUSHF|PUSHS|CALL|RET|JMP|JE|JNE|CMP|SETE|SETNE|SETL|SETNL|MEMCOPY|SAVESPS|LOADSPS|NOP|DEBUG|DEBUGPUSH|HEAPALLOCATE|HEAPRELEASE|HEAPGET|HEAPSET|BAND|BOR|BXOR|BNOT|BSHIFTL|BSHIFTR)\\b"
 		},
 		{
 			"name" : "magiccode.mnemonic",
-			"match" : "\\b(?:mov|movi|movs|movf|add|addi|adds|addf|sub|subi|subf|imul|imuli|imulf|idiv|idivi|idivf|pop|push|pushi|pushf|pushs|call|ret|jmp|je|jne|cmp|sete|setne|setl|setnl|memcopy|savesps|loadsps|nop|debug|debugpush)\\b"
+			"match" : "\\b(?:mov|movi|movs|movf|add|addi|adds|addf|sub|subi|subf|imul|imuli|imulf|idiv|idivi|idivf|pop|push|pushi|pushf|pushs|call|ret|jmp|je|jne|cmp|sete|setne|setl|setnl|memcopy|savesps|loadsps|nop|debug|debugpush|heapallocate|heaprelease|heapget|heapset|band|bor|bxor|bnot|bshiftl|bshiftr)\\b"
 		},
 		{
 			"name" : "magiccode.gwst",
@@ -42,11 +42,11 @@
 		},
 		{
 			"name" : "magiccode.operands",
-			"match" : "\\b(ZERO_I|ZERO_S|ZERO_F|RI1|RI2|RI3|RI4|RI5|RI6|RI7|RI1P|RSP|RBP|RGP|RAXP|RS1|RS2|RS3|RS4|RS5|RS6|RF1|RF2|RF3|RF4|RF5|RF6)\\b"
+			"match" : "\\b(ZERO_I|ZERO_S|ZERO_F|RI1|RI2|RI3|RI4|RI5|RI6|RI7|RI1P|RSP|RBP|RGP|RAXP|RS1|RS2|RS3|RS4|RS5|RS6|RF1|RF2|RF3|RF4|RF5|RF6|RHPI|RHPIS)\\b"
 		},
 		{
 			"name" : "magiccode.operands",
-			"match" : "\\b(zero_i|zero_s|zero_f|ri1|ri2|ri3|ri4|ri5|ri6|ri7|ri1p|rsp|rbp|rgp|raxp|rs1|rs2|rs3|rs4|rs5|rs6|rf1|rf2|rf3|rf4|rf5|rf6)\\b"
+			"match" : "\\b(zero_i|zero_s|zero_f|ri1|ri2|ri3|ri4|ri5|ri6|ri7|ri1p|rsp|rbp|rgp|raxp|rs1|rs2|rs3|rs4|rs5|rs6|rf1|rf2|rf3|rf4|rf5|rf6|rhpi|rhpis)\\b"
 		},
 		{
 			"name" : "magiccode.mcdebug",
@@ -69,8 +69,8 @@
 			"match" : "[+-]?\\d+(?:(?:\\.\\d*)?(F|f)?)\\b"
 		},
 		{
-			"name" : "keyword.other",
-			"match": "[a-zA-Z_$][a-zA-Z0-9_$]*\\s*:"
+			"name" : "magiccode.label",
+			"match": ".*\\s*:"
 		},
 		{
 			"name" : "mapper",
