@@ -127,10 +127,28 @@
 		{
 			"scope": [
 				"magiccode.gwst",
-				"magiccode.builtin"
+				"magiccode.builtin",
+				"magiccode.builtin.call.head",
+				"magiccode.builtin.logical_bit"
 			],
 			"settings": {
 				"foreground": "#8ddb59"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.builtin.call.body1",
+			],
+			"settings": {
+				"foreground": "#59c8db"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.builtin.call.body2",
+			],
+			"settings": {
+				"foreground": "#8059db"
 			}
 		},
 		{
@@ -149,6 +167,7 @@
 				"magiccode.irfb.semicoloncomma",
 				"magiccode.function.define.comma",
 				"magiccode.function.call.comma",
+				"magiccode.label"
 			],
 			"settings": {
 				"foreground": "#fc8865"
@@ -157,6 +176,7 @@
 		{
 			"scope": [
 				"magiccode.identdef.arraysize",
+				"magiccode.boxs.type",
 			],
 			"settings": {
 				"foreground": "#dc67ff"
@@ -293,6 +313,42 @@
 			"settings": {
 				"fontStyle": "bold",
 				"foreground": "#485db9e7"
+			}
+		},
+		{
+			"scope": [
+				"magiccode.expression.bracket.start.1",
+				"magiccode.expression.bracket.end.1",
+			],
+			"settings": {
+				"foreground": "#75d668",
+			}
+		},
+		{
+			"scope": [
+				"magiccode.expression.bracket.start.2",
+				"magiccode.expression.bracket.end.2",
+			],
+			"settings": {
+				"foreground": "#689bd6",
+			}
+		},
+		{
+			"scope": [
+				"magiccode.expression.bracket.start.3",
+				"magiccode.expression.bracket.end.3",
+			],
+			"settings": {
+				"foreground": "#d668d0",
+			}
+		},
+		{
+			"scope": [
+				"magiccode.expression.bracket.start.4",
+				"magiccode.expression.bracket.end.4",
+			],
+			"settings": {
+				"foreground": "#d69468",
 			}
 		},
 		{
