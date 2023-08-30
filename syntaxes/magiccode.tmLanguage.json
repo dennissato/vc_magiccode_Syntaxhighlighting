@@ -57,12 +57,7 @@
 							"include": "#irfb_global_variable_define"
 						},
 						{
-							"name": "invalid",
-							"match": "."
-						},
-						{
-							"name": "text",
-							"match": "\\s+"
+							"include": "#irfb_invalid_space"
 						}
 					]
 				}
@@ -104,6 +99,9 @@
 						},
 						{
 							"include": "#variable_define"
+						},
+						{
+							"include": "#builtin"
 						},
 						{
 							"include": "#function_call"
@@ -410,8 +408,7 @@
 									"match": ","
 								},
 								{
-									"name": "invalid",
-									"match": ".?"
+									"include": "#irfb_invalid_space"
 								}
 							]
 						},
@@ -588,8 +585,7 @@
 											}
 										},
 										{
-											"name": "invalid",
-											"match": "."
+											"include": "#irfb_invalid_space"
 										}
 									]
 								},
@@ -1477,8 +1473,7 @@
 					"include": "#irfb_variable"
 				},
 				{
-					"name": "keyword.operator",
-					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+                    "include": "#operators"
 				},
 				{
 					"name": "mapper",
@@ -1524,8 +1519,7 @@
 					"include": "#irfb_variable"
 				},
 				{
-					"name": "keyword.operator",
-					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+                    "include": "#operators"
 				},
 				{
 					"begin": "(\\()",
@@ -1567,8 +1561,7 @@
 					"include": "#irfb_variable"
 				},
 				{
-					"name": "keyword.operator",
-					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+                    "include": "#operators"
 				},
 				{
 					"begin": "(\\()",
@@ -1610,8 +1603,7 @@
 					"include": "#irfb_variable"
 				},
 				{
-					"name": "keyword.operator",
-					"match": "--|\\+\\+|[-\\+\\*\\/!<>\\=]\\=?"
+                    "include": "#operators"
 				},
 				{
 					"begin": "(\\()",
@@ -1641,12 +1633,12 @@
 		"irfb_invalid_space": {
 			"patterns": [
 				{
-					"name": "invalid",
-					"match": "."
-				},
-				{
 					"name": "text",
 					"match": "\\s+"
+				},
+				{
+					"name": "invalid",
+					"match": "."
 				}
 			]
 		},
@@ -1683,6 +1675,31 @@
 		"irfb_conditions": {
 			"patterns": [
 				{
+					"include": "#comments"
+				},
+				{
+					"include": "#blockcomments"
+				},
+				{
+					"begin": "(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "magiccode.irfb.conditions.start"
+						}
+					},
+					"end": "(\\))",
+					"endCaptures": {
+						"1": {
+							"name": "magiccode.irfb.conditions.end"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#irfb_conditions"
+						}
+					]
+				},
+				{
 					"include": "#numerics"
 				},
 				{
@@ -1690,6 +1707,9 @@
 				},
 				{
 					"include": "#operators"
+				},
+				{
+					"include": "#irfb_function_call"
 				},
 				{
 					"include": "#variable_enum"
@@ -1932,12 +1952,16 @@
 		"variable_enum": {
 			"patterns": [
 				{
+					"name": "variable_enum",
 					"match": "[[[:word:]|[:punct:]]&&[^-\\+\\*/\\(\\),\\[\\]\\{\\};:<>=&]]*"
 				}
 			]
 		},
 		"builtin": {
 			"patterns": [
+				{
+					"include": "#buildtin_logical_bit"
+				},
 				{
 					"include": "#buildtin_debug"
 				},
@@ -2025,6 +2049,14 @@
 							"name": "magiccode.builtin.call.body1"
 						}
 					}
+				}
+			]
+		},
+		"buildtin_logical_bit": {
+			"patterns": [
+				{
+					"name": "magiccode.builtin.logical_bit",
+					"match": "(and|or|band|bor|bxor|bnot|bshiftl|bshiftr)"
 				}
 			]
 		},
